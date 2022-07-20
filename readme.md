@@ -43,3 +43,6 @@
         - 待補
     - 後面接`forcast` 則網址為`https://avoiding-coming-water.herokuapp.com/api/forcast` 取得未來6小時之各式天氣及體感資訊
         - 待補
+
+由使用者本地更新所在經緯資訊(同時更新所在縣市)，將每次對python API的請求中附上縣市名稱以調取相對應資料。
+3分鐘更新(抓python API)一次，得知有無警報。
