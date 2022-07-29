@@ -9,4 +9,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="home_page_title_1">水來了</string>
+    <string name="home_page_title_2">快逃</string>
+    <string name="sub_title">野溪溫泉露營地 山洪暴發預警系統</string>
 </resources>
