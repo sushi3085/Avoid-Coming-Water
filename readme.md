@@ -31,6 +31,10 @@
 - [x] JAVA API
     - [x] 自製抓資料API
 
+---
+
+以下不在這個repo裡面，但需要處理...
+
 - [ ] Python API， 網址為：`https://avoiding-coming-water.herokuapp.com/api`
     - 後面接`qpe` 則網址為 `https://avoiding-coming-water.herokuapp.com/api/qpe` 取得未來一小時指定區域之預測雨量  
       參數名 + 參數datatype + 參數說明：  
