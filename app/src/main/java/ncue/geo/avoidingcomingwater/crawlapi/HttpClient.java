@@ -3,6 +3,9 @@ package ncue.geo.avoidingcomingwater.crawlapi;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -24,9 +27,10 @@ public class HttpClient {
             if (response.body() != null) {
                 return response.body().string();
             }
-        } catch (IOException ignore) {
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
-        return "";
+        return "FAIL REQUEST";
     }
 
     public String post(String uri, String json) {
