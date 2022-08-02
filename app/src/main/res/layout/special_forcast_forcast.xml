@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A9E7FF"
+    tools:context=".SpecialForcastActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/imageContainLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#6169F0AE"
+        app:layout_constraintBottom_toTopOf="@+id/positioningRefreshSpecial"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/specialTitleTextView"
+            android:layout_width="307dp"
+            android:layout_height="29dp"
+            android:gravity="center"
+            android:text="點擊氣象圖示 獲得更多警特報資訊"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/taiwanSpecialImageView"
+            android:layout_width="350dp"
+            android:layout_height="550dp"
+            android:layout_marginTop="32dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/taiwan_qver" />
+
+        <ImageButton
+            android:id="@+id/kaoshungSpecialButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="76dp"
+            android:background="@drawable/yellow_special_county_btn"
+            android:contentDescription="高雄市"
+            android:onClick="showSpecialInformation"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/taiwanSpecialImageView"
+            app:layout_constraintStart_toStartOf="@+id/taiwanSpecialImageView"
+            app:srcCompat="@drawable/questionmark" />
+
+        <ImageButton
+            android:id="@+id/yilanSpecialButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="149dp"
+            android:background="@drawable/yellow_special_county_btn"
+            android:contentDescription="宜蘭縣"
+            android:onClick="showSpecialInformation"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="@+id/taiwanSpecialImageView"
+            app:layout_constraintTop_toTopOf="@+id/taiwanSpecialImageView"
+            app:srcCompat="@drawable/questionmark" />
+
+        <ImageButton
+            android:id="@+id/taidongSpecialButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="76dp"
+            android:layout_marginBottom="108dp"
+            android:background="@drawable/yellow_special_county_btn"
+            android:contentDescription="臺東縣"
+            android:onClick="showSpecialInformation"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/taiwanSpecialImageView"
+            app:layout_constraintEnd_toEndOf="@+id/taiwanSpecialImageView"
+            app:srcCompat="@drawable/questionmark" />
+
+        <ImageButton
+            android:id="@+id/shinbeiSpecialButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="4dp"
+            android:background="@drawable/yellow_special_county_btn"
+            android:contentDescription="新北市"
+            android:onClick="showSpecialInformation"
+            android:scaleType="centerInside"
+            app:layout_constraintEnd_toEndOf="@+id/taiwanSpecialImageView"
+            app:layout_constraintTop_toTopOf="@+id/taiwanSpecialImageView"
+            app:srcCompat="@drawable/questionmark" />
+
+        <ImageButton
+            android:id="@+id/taouanSpecialButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="128dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/yellow_special_county_btn"
+            android:contentDescription="桃園市"
+            android:onClick="showSpecialInformation"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="@+id/taiwanSpecialImageView"
+            app:layout_constraintTop_toTopOf="@+id/taiwanSpecialImageView"
+            app:srcCompat="@drawable/questionmark" />
+
+        <ImageButton
+            android:id="@+id/shinchuSpecialButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/special_county_btn"
+            android:contentDescription="新竹縣"
+            android:onClick="showSpecialInformation"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="@+id/taiwanSpecialImageView"
+            app:layout_constraintTop_toTopOf="@+id/taiwanSpecialImageView"
+            app:srcCompat="@drawable/questionmark" />
+
+        <ImageButton
+            android:id="@+id/miaoliSpecialButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="108dp"
+            android:background="@drawable/yellow_special_county_btn"
+            android:contentDescription="苗栗縣"
+            android:onClick="showSpecialInformation"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="@+id/taiwanSpecialImageView"
+            app:layout_constraintTop_toTopOf="@+id/taiwanSpecialImageView"
+            app:srcCompat="@drawable/questionmark" />
+
+        <ImageButton
+            android:id="@+id/taichungSpecialButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="156dp"
+            android:background="@drawable/yellow_special_county_btn"
+            android:contentDescription="臺中市"
+            android:onClick="showSpecialInformation"
+            android:scaleType="centerInside"
+            app:layout_constraintStart_toStartOf="@+id/taiwanSpecialImageView"
+            app:layout_constraintTop_toTopOf="@+id/taiwanSpecialImageView"
+            app:srcCompat="@drawable/questionmark" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/positioningRefreshSpecial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="定位警特報"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/refreshSpecial" />
+
+    <Button
+        android:id="@+id/refreshSpecial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="更新資訊"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/positioningRefreshSpecial"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ScrollView
+        android:id="@+id/informationScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:background="#D7FFFE"
+        android:contentDescription="informations"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/positioningRefreshSpecial"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="【更新資訊】\n\t\t可看警特報\n\n【定位警特報】\n\t\t開啟定位後可看所在縣市警特報"
+                android:textAlignment="gravity"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

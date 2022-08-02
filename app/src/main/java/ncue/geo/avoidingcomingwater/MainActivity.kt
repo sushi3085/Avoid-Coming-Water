@@ -95,8 +95,8 @@ class MainActivity : AppCompatActivity() {
         ConditionController.IS_RECIEVING = !ConditionController.IS_RECIEVING
     }
 
-    fun futureForcastButtonOnClick(view: View) {
-        val intent = Intent(this, FutureForcastActivity::class.java)
+    fun specialButtonOnClick(view: View) {
+        val intent = Intent(this, SpecialForcastActivity::class.java)
         startActivity(intent)
     }
 

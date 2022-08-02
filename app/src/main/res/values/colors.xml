@@ -10,4 +10,8 @@
     <color name="main_color">#FF3363BB</color>
     <color name="secondary_color">#FF63DFBB</color>
     <color name="homepage_red_btn">#FFFF5454</color>
+    <color name="red_special_county_btn">#80FF5252</color>
+    <color name="pressed_red_special_county_btn">#AAFF5252</color>
+    <color name="yellow_special_county_btn">#80EEFF41</color>
+    <color name="pressed_yellow_special_county_btn">#CCEEFF41</color>
 </resources>
