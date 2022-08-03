@@ -55,14 +55,16 @@ class SpecialForcastActivity : AppCompatActivity() {
         /** define countyButtons' information map **/
         /** get component and click listener bound together **/
         /** 自 Controller 讀取資訊 **/
-        buttonsInformation["新北市"] = "請先更新資訊，謝謝您！";specialButtons[0] = R.id.shinbeiSpecialButton
-        buttonsInformation["桃園市"] = "請先更新資訊，謝謝您！";specialButtons[1] = R.id.taouanSpecialButton
-        buttonsInformation["新竹縣"] = "請先更新資訊，謝謝您！";specialButtons[2] = R.id.shinchuSpecialButton
-        buttonsInformation["苗栗縣"] = "請先更新資訊，謝謝您！";specialButtons[3] = R.id.miaoliSpecialButton
-        buttonsInformation["臺中市"] = "請先更新資訊，謝謝您！";specialButtons[4] = R.id.taichungSpecialButton
-        buttonsInformation["高雄市"] = "請先更新資訊，謝謝您！";specialButtons[5] = R.id.kaoshungSpecialButton
-        buttonsInformation["臺東縣"] = "請先更新資訊，謝謝您！";specialButtons[6] = R.id.taidongSpecialButton
-        buttonsInformation["宜蘭縣"] = "請先更新資訊，謝謝您！";specialButtons[7] = R.id.yilanSpecialButton
+        buttonsInformation["新北市"] = ConditionController.specialButtonInformation["新北市"]!!;specialButtons[0] = R.id.shinbeiSpecialButton
+        buttonsInformation["桃園市"] = ConditionController.specialButtonInformation["桃園市"]!!;specialButtons[1] = R.id.taouanSpecialButton
+        buttonsInformation["新竹縣"] = ConditionController.specialButtonInformation["新竹縣"]!!;specialButtons[2] = R.id.shinchuSpecialButton
+        buttonsInformation["苗栗縣"] = ConditionController.specialButtonInformation["苗栗縣"]!!;specialButtons[3] = R.id.miaoliSpecialButton
+        buttonsInformation["臺中市"] = ConditionController.specialButtonInformation["臺中市"]!!;specialButtons[4] = R.id.taichungSpecialButton
+        buttonsInformation["高雄市"] = ConditionController.specialButtonInformation["高雄市"]!!;specialButtons[5] = R.id.kaoshungSpecialButton
+        buttonsInformation["臺東縣"] = ConditionController.specialButtonInformation["臺東縣"]!!;specialButtons[6] = R.id.taidongSpecialButton
+        buttonsInformation["宜蘭縣"] = ConditionController.specialButtonInformation["宜蘭縣"]!!;specialButtons[7] = R.id.yilanSpecialButton
+
+        updateButtonImages()
 
         // check for positioning
         // change the value of ConditionController.IS_POSITIONING
@@ -140,20 +142,7 @@ class SpecialForcastActivity : AppCompatActivity() {
                 print("$countyName:")
                 println(buttonsInformation[countyName])
             }
-            this.runOnUiThread {
-                // change button background and icon
-                for(id in specialButtons){
-                    val btn: ImageButton = findViewById(id)
-                    println()
-                    if(buttonsInformation[btn.contentDescription] == "尚無相關警特報資訊"){
-                        btn.setImageResource(R.drawable.no_information)
-                        btn.setBackgroundResource(R.drawable.yellow_special_county_btn)
-                    }else{
-                        btn.setImageResource(R.drawable.popout_warning_icon)
-                        btn.setBackgroundResource(R.drawable.red_round_corner_img_btn)
-                    }
-                }
-            }
+            updateButtonImages()
             val data = Bundle()
             data.putString("MESSAGE", "點擊氣象圖示 獲得更多警特報資訊")
             val msg = Message()
@@ -161,6 +150,27 @@ class SpecialForcastActivity : AppCompatActivity() {
             textViewInformationHandler.sendMessage(msg)
 
             /** 儲存狀態至 Controller **/
+            buttonsInformation.forEach{
+                ConditionController.specialButtonInformation[it.key] = it.value
+            }
+        }
+    }
+
+    private fun updateButtonImages() {
+        this.runOnUiThread {
+            // change button background and icon
+            for (id in specialButtons) {
+                val btn: ImageButton = findViewById(id)
+                if(buttonsInformation[btn.contentDescription] == "請先更新資訊，謝謝您！"){
+                    btn.setImageResource(R.drawable.questionmark)
+                } else if (buttonsInformation[btn.contentDescription] == "尚無相關警特報資訊") {
+                    btn.setImageResource(R.drawable.no_information)
+                    btn.setBackgroundResource(R.drawable.yellow_special_county_btn)
+                } else {
+                    btn.setImageResource(R.drawable.popout_warning_icon)
+                    btn.setBackgroundResource(R.drawable.red_round_corner_img_btn)
+                }
+            }
         }
     }
 

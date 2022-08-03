@@ -5,7 +5,7 @@ class ConditionController {
         var IS_RECIEVING: Boolean = false
         var IS_POSITIONING: Boolean = false
 
-        val specialButtonInformation = mapOf(
+        val specialButtonInformation = mutableMapOf(
             "新北市" to "請先更新資訊，謝謝您！",
             "桃園市" to "請先更新資訊，謝謝您！",
             "新竹縣" to "請先更新資訊，謝謝您！",
