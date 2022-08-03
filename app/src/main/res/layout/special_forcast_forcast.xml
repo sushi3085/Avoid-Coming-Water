@@ -117,7 +117,7 @@
             android:layout_height="48dp"
             android:layout_marginStart="80dp"
             android:layout_marginTop="60dp"
-            android:background="@drawable/special_county_btn"
+            android:background="@drawable/round_corner_img_btn"
             android:contentDescription="新竹縣"
             android:onClick="showSpecialInformation"
             android:scaleType="centerInside"

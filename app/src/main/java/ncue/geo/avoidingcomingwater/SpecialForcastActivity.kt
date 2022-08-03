@@ -19,8 +19,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ncue.geo.avoidingcomingwater.crawlapi.HttpClient
 import org.json.JSONArray
-import org.json.JSONTokener
-import java.util.*
 import kotlin.collections.HashMap
 import kotlin.concurrent.thread
 
@@ -29,7 +27,10 @@ class SpecialForcastActivity : AppCompatActivity() {
     private lateinit var textViewInformationHandler: Handler
     private lateinit var informationUpdater: Handler
     private val buttonsInformation = HashMap<String, String>()
-    private val locationListener = LocationListener { println(it) }
+    private val specialButtons = Array(8){0}
+    private val locationListener = LocationListener { println("handler print: $it"); this.hasUpdateLocation = true }
+    private var location: Location? = null
+    private var hasUpdateLocation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,14 +54,15 @@ class SpecialForcastActivity : AppCompatActivity() {
 
         /** define countyButtons' information map **/
         /** get component and click listener bound together **/
-        buttonsInformation["新北市"] = ""
-        buttonsInformation["桃園市"] = ""
-        buttonsInformation["新竹縣"] = ""
-        buttonsInformation["苗栗縣"] = ""
-        buttonsInformation["臺中市"] = ""
-        buttonsInformation["高雄市"] = ""
-        buttonsInformation["臺東縣"] = ""
-        buttonsInformation["宜蘭縣"] = ""
+        /** 自 Controller 讀取資訊 **/
+        buttonsInformation["新北市"] = "請先更新資訊，謝謝您！";specialButtons[0] = R.id.shinbeiSpecialButton
+        buttonsInformation["桃園市"] = "請先更新資訊，謝謝您！";specialButtons[1] = R.id.taouanSpecialButton
+        buttonsInformation["新竹縣"] = "請先更新資訊，謝謝您！";specialButtons[2] = R.id.shinchuSpecialButton
+        buttonsInformation["苗栗縣"] = "請先更新資訊，謝謝您！";specialButtons[3] = R.id.miaoliSpecialButton
+        buttonsInformation["臺中市"] = "請先更新資訊，謝謝您！";specialButtons[4] = R.id.taichungSpecialButton
+        buttonsInformation["高雄市"] = "請先更新資訊，謝謝您！";specialButtons[5] = R.id.kaoshungSpecialButton
+        buttonsInformation["臺東縣"] = "請先更新資訊，謝謝您！";specialButtons[6] = R.id.taidongSpecialButton
+        buttonsInformation["宜蘭縣"] = "請先更新資訊，謝謝您！";specialButtons[7] = R.id.yilanSpecialButton
 
         // check for positioning
         // change the value of ConditionController.IS_POSITIONING
@@ -97,17 +99,27 @@ class SpecialForcastActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    private fun soSuchPlacePopup(){
+        val dialog = AlertDialog.Builder(this)
+        dialog.setIcon(R.drawable.i_icon)
+        dialog.setTitle("Title here")
+        dialog.setMessage("still not come up with the title and message content\ncurrently not supporting your county")
+        dialog.setPositiveButton("知道了") {_,_ ->}
+        dialog.show()
+    }
+
     fun showSpecialInformation(view: View) {
         val countyName = view.contentDescription.toString()
         popupInformation(countyName, buttonsInformation[countyName]!!)
     }
 
     // TODO: 屆時修正請求網址
+    // FIXME: BUG AFTER UPDATE
     private fun updateInformationButtonOnclick() {
         findViewById<TextView>(R.id.specialTitleTextView).text = "更新中，請稍後～"
         thread {
             // TODO: 增加：如果回傳沒有警特報的處理流程
-            val uri = "https://09cd-61-221-225-124.jp.ngrok.io/api/special/%s"
+            val uri = "https://c608-118-163-203-105.jp.ngrok.io/api/special/%s"
             val client = HttpClient()
             /** -- -- --- -- -- **/
             for (pair in buttonsInformation) {
@@ -122,11 +134,25 @@ class SpecialForcastActivity : AppCompatActivity() {
                     }
                     buttonsInformation[countyName] = result
                 } else {
-                    buttonsInformation[countyName] = response
+                    buttonsInformation[countyName] = response.trim('\n').trim('"')
                 }
 
-                println(countyName)
+                print("$countyName:")
                 println(buttonsInformation[countyName])
+            }
+            this.runOnUiThread {
+                // change button background and icon
+                for(id in specialButtons){
+                    val btn: ImageButton = findViewById(id)
+                    println()
+                    if(buttonsInformation[btn.contentDescription] == "尚無相關警特報資訊"){
+                        btn.setImageResource(R.drawable.no_information)
+                        btn.setBackgroundResource(R.drawable.yellow_special_county_btn)
+                    }else{
+                        btn.setImageResource(R.drawable.popout_warning_icon)
+                        btn.setBackgroundResource(R.drawable.red_round_corner_img_btn)
+                    }
+                }
             }
             val data = Bundle()
             data.putString("MESSAGE", "點擊氣象圖示 獲得更多警特報資訊")
@@ -134,48 +160,35 @@ class SpecialForcastActivity : AppCompatActivity() {
             msg.data = data
             textViewInformationHandler.sendMessage(msg)
 
-            /** -- -- --- -- -- **/
+            /** 儲存狀態至 Controller **/
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    // TODO : 抓資訊
-    private fun printLocal(): Location? {
+    private fun updateLocal(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
             ) {
                 /* 那就 */
-                return null
+                return
             }
         }
         val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        locationManager.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER,
-            0,
-            0.0F,
-            locationListener
-        )
-        /** 知道位置之後 **/
-        val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,999999F,locationListener)
 
-        if (location != null) {
-            findViewById<TextView>(R.id.textView).text =
-                "經度是：${location.longitude}\n緯度是：${location.latitude}\n"
-            findViewById<TextView>(R.id.textView).append("地點在：")
-            findViewById<TextView>(R.id.textView).append("relative information...")
-        }
-        locationManager.removeUpdates(locationListener)
-        return location
+        /** 知道位置之後，取得位置資訊 **/
+        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
     }
 
     private fun positionButtonOnclick() {
+        /** first update information **/
+//        updateInformationButtonOnclick()
+        /** -- --- -- **/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                 checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
             ) {
                 /* 那就 */
-                println("DIDN'T ENABLE LOCATING")
                 return
             }
         }
@@ -184,19 +197,50 @@ class SpecialForcastActivity : AppCompatActivity() {
             alertPositioning()
             return
         }
-        // TODO: 獲取定位資訊
-        val location = printLocal() ?: return
-        // TODO: 新增「藉由經緯取得所在縣市名稱」功能 // https://api.nlsc.gov.tw/other/TownVillagePointQuery/120.698659/24.156250/4326
-        val uri = "https://api.nlsc.gov.tw/other/TownVillagePointQuery/%f/%f/4326".format(
-            location.longitude,
-            location.latitude
-        )
-        thread {
-            val response = HttpClient().get(uri)
-            // TODO: 直接split 'ctyName'掉 就好了，用XML真的是...
-            println("THREAD STARTED")
+        // 獲取定位資訊
+        updateLocal()
+        // if not update yet, popup and return
+        if(!this.hasUpdateLocation){
+            popupInformation("", "初次更新位置資訊需要較久時間\n請再次嘗試")
+            return
         }
-        return
+        // 「藉由經緯取得所在縣市名稱」功能 // https://api.nlsc.gov.tw/other/TownVillagePointQuery/120.698659/24.156250/4326
+        thread {
+            val uri = "https://api.nlsc.gov.tw/other/TownVillagePointQuery/%f/%f/4326".format(
+                this.location!!.longitude,
+                this.location!!.latitude
+            )
+            val response = HttpClient().get(uri)
+            if(response.split("ctyName").size == 1){
+                this.runOnUiThread {
+                    // TODO: popup failure and return
+                    val dialog = AlertDialog.Builder(this)
+                    dialog.setTitle("查無該處")
+                    dialog.setMessage("未支援您所在的位置")
+                    dialog.setIcon(R.drawable.i_icon)
+                    dialog.setPositiveButton("知道了") {_,_ ->}
+                    dialog.show()
+                }
+                return@thread
+            }
+            val countyName = response.split("ctyName")[1].subSequence(1..3).toString()
+            if(countyName !in buttonsInformation.keys){
+                this.runOnUiThread {
+                    // TODO: popup failure and return
+                    val dialog = AlertDialog.Builder(this)
+                    dialog.setTitle(countyName)
+                    dialog.setMessage("未支援您所在的縣市")
+                    dialog.setIcon(R.drawable.i_icon)
+                    dialog.setPositiveButton("知道了") {_,_ ->}
+                    dialog.show()
+                }
+                return@thread
+            }
+            this.runOnUiThread {
+                popupInformation(countyName, buttonsInformation[countyName]!!)
+            }
+            println("PRINT FROM THREAD: 所在位置$countyName")
+        }
     }
 
     private fun isGPSEnabled(context: Context): Boolean {
