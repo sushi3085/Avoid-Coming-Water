@@ -116,12 +116,10 @@ class SpecialForcastActivity : AppCompatActivity() {
     }
 
     // TODO: 屆時修正請求網址
-    // FIXME: BUG AFTER UPDATE
     private fun updateInformationButtonOnclick() {
         findViewById<TextView>(R.id.specialTitleTextView).text = "更新中，請稍後～"
         thread {
-            // TODO: 增加：如果回傳沒有警特報的處理流程
-            val uri = "https://c608-118-163-203-105.jp.ngrok.io/api/special/%s"
+            val uri = "https://ff7b-61-221-225-125.jp.ngrok.io/api/special/%s"
             val client = HttpClient()
             /** -- -- --- -- -- **/
             for (pair in buttonsInformation) {

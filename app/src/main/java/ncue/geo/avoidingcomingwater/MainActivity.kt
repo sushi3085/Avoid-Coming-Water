@@ -100,6 +100,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun radarButtonOnClick(view: View){
+        startActivity(Intent(this, RadarActivity::class.java))
+        return
+    }
+
     fun settingButtonOnClick(view: View){
 //        val intent = Intent(this, )
         return
