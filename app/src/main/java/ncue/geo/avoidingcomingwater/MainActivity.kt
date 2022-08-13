@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import ncue.geo.avoidingcomingwater.crawlapi.HttpClient
+import ncue.geo.avoidingcomingwater.futurefeelactivity.FutureFeelingActivity
 import ncue.geo.avoidingcomingwater.service.AlertService
 import kotlin.concurrent.thread
 
@@ -132,5 +133,11 @@ class MainActivity : AppCompatActivity() {
 //        val intent = Intent(this, )
         Toast.makeText(this, "opening settings", Toast.LENGTH_SHORT).show()
         return
+    }
+
+    fun futurefellingButtonOnClick(view: View){
+        Intent(this, FutureFeelingActivity::class.java).also {
+            startActivity(it)
+        }
     }
 }

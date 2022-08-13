@@ -18,7 +18,11 @@
         android:theme="@style/Theme.AvoidingComingWater"
         tools:targetApi="31">
         <activity
-            android:name=".RadarActivity"
+            android:name=".futurefeelactivity.FutureFeelingDisplayActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AvoidingComingWater.NoActionBar" />
+        <activity
+            android:name=".futurefeelactivity.FutureFeelingActivity"
             android:exported="false"
             android:theme="@style/Theme.AvoidingComingWater.NoActionBar" />
         <activity
@@ -38,7 +42,6 @@
         </activity>
 
         <service android:name=".service.AlertService" />
-
     </application>
 
 </manifest>
