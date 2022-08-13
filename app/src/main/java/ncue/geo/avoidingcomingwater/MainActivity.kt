@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import ncue.geo.avoidingcomingwater.crawlapi.HttpClient
+import ncue.geo.avoidingcomingwater.service.AlertService
 import kotlin.concurrent.thread
 
 
@@ -68,12 +69,17 @@ class MainActivity : AppCompatActivity() {
 
         // check services number/is running
         // update recieve button condition
-        ConditionController.IS_RECIEVING = getPreferences(MODE_PRIVATE).getBoolean("IS_RECIEVING", false)
-        if(ConditionController.IS_RECIEVING)
-            findViewById<Button>(R.id.recieveBtn).backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF54FF54"))// green color
-        else
-            findViewById<Button>(R.id.recieveBtn).backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFFF5454"))// red color
+        updateRecievingButtonColor()
 
+    }
+
+    private fun updateRecievingButtonColor() {
+        if (getSharedPreferences("AVOIDING_WATER", MODE_PRIVATE).getBoolean("IS_RECIEVING", false))
+            findViewById<Button>(R.id.recieveBtn).backgroundTintList =
+                ColorStateList.valueOf(Color.parseColor("#FF54FF54"))// green color
+        else
+            findViewById<Button>(R.id.recieveBtn).backgroundTintList =
+                ColorStateList.valueOf(Color.parseColor("#FFFF5454"))// red color
     }
 
     @Deprecated("do not use")
@@ -94,24 +100,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun redButtonClicked(view: View) {
-        val setting = getPreferences(Context.MODE_PRIVATE)
-        ConditionController.IS_RECIEVING = setting.getBoolean("IS_RECIEVING", false)
-        if (ConditionController.IS_RECIEVING) {
-            (view as Button).setBackgroundColor(Color.parseColor("#FFFF5454"))
-            view.text = "未接收預警"
-            setting.edit().putBoolean("IS_RECIEVING", false).apply()
+        val setting = getSharedPreferences("AVOIDING_WATER", MODE_PRIVATE)
+        if (setting.getBoolean("IS_RECIEVING", false)) {
+            (view as Button).text = "未接收預警"
         } else {
-            (view as Button).setBackgroundColor(Color.parseColor("#FF54FF54"))
-            view.text = "接收預警中"
-            setting.edit().putBoolean("IS_RECIEVING", true).apply()
+            (view as Button).text = "接收預警中"
             // thread crawl to python API
             // TODO
             //  search DB for service number, decide 'startService()' or not
-            //  Intent(this, AlertService::class.java).also {
-            //      startService(it)
-            //  }
+            // start service
+            Intent(this, AlertService::class.java).also {
+                startService(it)
+            }
         }
-        ConditionController.IS_RECIEVING = !ConditionController.IS_RECIEVING
+        val recievingStatus = setting.getBoolean("IS_RECIEVING", false)
+        setting.edit().putBoolean("IS_RECIEVING", !recievingStatus).apply()
+        updateRecievingButtonColor()
     }
 
     fun specialButtonOnClick(view: View) {

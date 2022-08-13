@@ -1,15 +1,22 @@
 package ncue.geo.avoidingcomingwater.service
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.*
 import android.os.Process.THREAD_PRIORITY_BACKGROUND
 import android.util.Log
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import ncue.geo.avoidingcomingwater.ConditionController
 import ncue.geo.avoidingcomingwater.MainActivity
+import ncue.geo.avoidingcomingwater.R
 import ncue.geo.avoidingcomingwater.crawlapi.HttpClient
 import java.lang.Process
+import java.util.*
 import kotlin.concurrent.thread
 
 class AlertService: Service() {
@@ -23,16 +30,29 @@ class AlertService: Service() {
         override fun handleMessage(msg: Message) {
             // Normally we would do some work here, like download a file.
             // For our sample, we just sleep for 5 seconds.
+            createNotificationChannel()
+            val setting = getSharedPreferences("AVOIDING_WATER", MODE_PRIVATE)
+            val builder = NotificationCompat.Builder(baseContext, "CHANNEL_ID")
+                .setSmallIcon(R.drawable.i_icon)
+                .setContentTitle("textTitle")
+                .setContentText("textContent")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+
             try {
-                val client = HttpClient()
-                while(getSharedPreferences("IS_RECIEVING", MODE_PRIVATE)
-                        .getBoolean("IS_RECIEVING", false)){
+                Thread.sleep(500)// waiting for variable change
+                while(setting.getBoolean("IS_RECIEVING", false)){
                     /** keep requesting data **/
-                    Log.wtf("SERVICE", client.get("https://jsonplaceholder.typicode.com/todos/1"))
+                    Log.wtf("SERVICE", Calendar.getInstance().time.toString())
+
+                    /** if get alert : vibration and show notification **/
+                    with(NotificationManagerCompat.from(baseContext)) {
+                        // notificationId is a unique int for each notification that you must define
+                        notify(0, builder.build())
+                    }
                     Thread.sleep(5*1000)
                 }
-                Thread.sleep(5000)
-                Log.wtf("SERVICE", "MESSAGE HERE in the service.")
+                Log.wtf("SERVICE", "MESSAGE HERE in the service. Recieving is done.")
             } catch (e: InterruptedException) {
                 // Restore interrupt status.
                 Thread.currentThread().interrupt()
@@ -79,5 +99,22 @@ class AlertService: Service() {
 
     override fun onDestroy() {
         Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "channel_name"
+            val descriptionText = "channel_description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("CHANNEL_ID", name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }
