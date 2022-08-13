@@ -107,8 +107,9 @@ class AlertService: Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "channel_name"
             val descriptionText = "channel_description"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel("CHANNEL_ID", name, importance).apply {
+                enableVibration(true)
                 description = descriptionText
             }
             // Register the channel with the system
