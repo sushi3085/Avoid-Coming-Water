@@ -1,7 +1,9 @@
 package ncue.geo.avoidingcomingwater
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +15,7 @@ import android.view.animation.TranslateAnimation
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import ncue.geo.avoidingcomingwater.crawlapi.HttpClient
@@ -23,13 +26,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var informationArea: TextView
     private lateinit var handler: Handler
-    private lateinit var waveImage: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        findViewById<Button>(R.id.button).setOnClickListener { refreshOnClick() }
+//        findViewById<Button>(R.id.button).setOnClickListener { refreshOnClick() }
         informationArea = findViewById(R.id.homapage_subtitle)
 
         handler = Handler {
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        waveImage = findViewById<ImageView>(R.id.waveImage_1)
+        val waveImage = findViewById<ImageView>(R.id.waveImage_1)
         val waveimage2 = findViewById<ImageView>(R.id.waveImage_2)
 
         var ani = TranslateAnimation(-500.0F, 500.0F, 0.0F, 0.0F)
@@ -63,18 +65,27 @@ class MainActivity : AppCompatActivity() {
                 ), 100
             )
         }
+
+        // check services number/is running
+        // update recieve button condition
+        ConditionController.IS_RECIEVING = getPreferences(MODE_PRIVATE).getBoolean("IS_RECIEVING", false)
+        if(ConditionController.IS_RECIEVING)
+            findViewById<Button>(R.id.recieveBtn).backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF54FF54"))// green color
+        else
+            findViewById<Button>(R.id.recieveBtn).backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FFFF5454"))// red color
+
     }
 
     @Deprecated("do not use")
     private fun refreshOnClick() {
         val thread = thread {
-            val data: Bundle = Bundle()
+            val data = Bundle()
             data.putString(
                 "response",
                 HttpClient().get("https://jsonplaceholder.typicode.com/todos/1")
             )
 
-            val msg: Message = Message()
+            val msg = Message()
             msg.data = data
             handler.sendMessage(msg)
         }
@@ -83,14 +94,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun redButtonClicked(view: View) {
+        val setting = getPreferences(Context.MODE_PRIVATE)
+        ConditionController.IS_RECIEVING = setting.getBoolean("IS_RECIEVING", false)
         if (ConditionController.IS_RECIEVING) {
             (view as Button).setBackgroundColor(Color.parseColor("#FFFF5454"))
             view.text = "未接收預警"
+            setting.edit().putBoolean("IS_RECIEVING", false).apply()
         } else {
             (view as Button).setBackgroundColor(Color.parseColor("#FF54FF54"))
             view.text = "接收預警中"
+            setting.edit().putBoolean("IS_RECIEVING", true).apply()
             // thread crawl to python API
             // TODO
+            //  search DB for service number, decide 'startService()' or not
+            //  Intent(this, AlertService::class.java).also {
+            //      startService(it)
+            //  }
         }
         ConditionController.IS_RECIEVING = !ConditionController.IS_RECIEVING
     }
@@ -101,12 +120,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun radarButtonOnClick(view: View){
-        startActivity(Intent(this, RadarActivity::class.java))
+//        startActivity(Intent(this, RadarActivity::class.java))
         return
     }
 
     fun settingButtonOnClick(view: View){
 //        val intent = Intent(this, )
+        Toast.makeText(this, "opening settings", Toast.LENGTH_SHORT).show()
         return
     }
 }
