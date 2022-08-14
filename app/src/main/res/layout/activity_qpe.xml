@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/qpePositionTV"
+        android:id="@+id/qpeZoneTV"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="32dp"
@@ -66,7 +66,7 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/qpePositionTV"
+        app:layout_constraintStart_toEndOf="@+id/qpeZoneTV"
         app:layout_constraintTop_toBottomOf="@+id/qpeCountySpinner" />
 
     <Button
@@ -79,14 +79,14 @@
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/qpePositionTV" />
 
     <TextView
         android:id="@+id/qpeRainTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:text="未來反演降雨量："
+        android:text="未來1小時集水區降雨量："
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/qpeRainValueTV"
         app:layout_constraintHorizontal_bias="0.5"
@@ -110,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="未來反演降雨程度："
+        android:text="未來預估降雨程度："
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/qpeRainLevelValueTV"
         app:layout_constraintHorizontal_bias="0.5"
@@ -122,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="搭雨"
+        android:text="----"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="未來1小時是否警戒："
+        android:text="未來1小時警戒可能："
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/qpeIsAlertValueTV"
         app:layout_constraintHorizontal_bias="0.5"
@@ -146,7 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="試"
+        android:text="------"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -154,7 +154,7 @@
         app:layout_constraintTop_toBottomOf="@+id/qpeRainLevelValueTV" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/qpePositionTV"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="32dp"
@@ -164,7 +164,7 @@
         app:layout_constraintEnd_toStartOf="@+id/qpePositionSpinner"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/qpePositionTV" />
+        app:layout_constraintTop_toBottomOf="@+id/qpeZoneTV" />
 
     <Spinner
         android:id="@+id/qpePositionSpinner"
@@ -175,6 +175,6 @@
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/qpePositionTV"
         app:layout_constraintTop_toBottomOf="@+id/qpeZoneSpinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>
