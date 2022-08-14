@@ -18,6 +18,10 @@
         android:theme="@style/Theme.AvoidingComingWater"
         tools:targetApi="31">
         <activity
+            android:name=".qpesumsactivity.QpeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AvoidingComingWater.NoActionBar" />
+        <activity
             android:name=".futurefeelactivity.FutureFeelingDisplayActivity"
             android:exported="false"
             android:theme="@style/Theme.AvoidingComingWater.NoActionBar" />

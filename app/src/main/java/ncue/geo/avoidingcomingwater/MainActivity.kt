@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import ncue.geo.avoidingcomingwater.crawlapi.HttpClient
 import ncue.geo.avoidingcomingwater.futurefeelactivity.FutureFeelingActivity
+import ncue.geo.avoidingcomingwater.qpesumsactivity.QpeActivity
 import ncue.geo.avoidingcomingwater.service.AlertService
 import kotlin.concurrent.thread
 
@@ -137,6 +138,12 @@ class MainActivity : AppCompatActivity() {
 
     fun futurefellingButtonOnClick(view: View){
         Intent(this, FutureFeelingActivity::class.java).also {
+            startActivity(it)
+        }
+    }
+
+    fun qpesumsButtonOnClick(view: View){
+        Intent(this, QpeActivity::class.java).also {
             startActivity(it)
         }
     }

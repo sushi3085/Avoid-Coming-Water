@@ -19,9 +19,102 @@
         <item>桃園市</item>
         <item>宜蘭市</item>
         <item>新竹縣</item>
-        <item>苗栗縣</item>
         <item>台中市</item>
         <item>高雄市</item>
         <item>台東縣</item>
     </string-array>
+
+    <string-array name="請選擇縣市">
+        <item>請選擇縣市</item>
+    </string-array>
+
+    <string-array name="新北市的鄉鎮">
+        <item>金山區</item>
+        <item>三峽區</item>
+        <item>烏來區</item>
+    </string-array>
+    <string-array name="桃園市的鄉鎮">
+        <item>復興區</item>
+    </string-array>
+    <string-array name="宜蘭市的鄉鎮">
+        <item>大同鄉</item>
+    </string-array>
+    <string-array name="新竹縣的鄉鎮">
+        <item>尖石鄉</item>
+    </string-array>
+    <string-array name="台中市的鄉鎮">
+        <item>和平區</item>
+    </string-array>
+    <string-array name="高雄市的鄉鎮">
+        <item>桃源區</item>
+        <item>六龜區</item>
+        <item>茂林區</item>
+    </string-array>
+    <string-array name="台東縣的鄉鎮">
+        <item>海端鄉</item>
+    </string-array>
+    <string-array name="南投縣的鄉鎮">
+        <item>信義鄉</item>
+        <item>仁愛鄉</item>
+    </string-array>
+
+    <string-array name="金山區">
+        <item>八煙野溪溫泉</item>
+    </string-array>
+    <string-array name="三峽區">
+        <item>大豹溪蟾蜍山谷</item>
+    </string-array>
+    <string-array name="烏來區">
+        <item>桶後溪營地</item>
+    </string-array>
+    <string-array name="復興區">
+        <item>流霞谷親水烤肉園區</item>
+        <item>八度野溪露營區</item>
+        <item>嘎拉賀溫泉</item>
+        <item>四稜溫泉</item>
+    </string-array>
+    <string-array name="大同鄉">
+        <item>祕密基地露營區</item>
+    </string-array>
+    <string-array name="尖石鄉">
+        <item>泰崗野溪溫泉</item>
+        <item>梅淮露營區</item>
+        <item>秀巒溫泉</item>
+    </string-array>
+    <string-array name="和平區">
+        <item>神駒谷溫泉</item>
+        <item>馬稜溫泉</item>
+    </string-array>
+    <string-array name="桃源區">
+        <item>玉穗溫泉</item>
+        <item>荖荖溫泉</item>
+        <item>十坑溫泉</item>
+    </string-array>
+    <string-array name="六龜區">
+        <item>邦腹溪營地</item>
+        <item>七坑溫泉</item>
+    </string-array>
+    <string-array name="茂林區">
+        <item>琉璃灣露營區</item>
+    </string-array>
+    <string-array name="海端鄉">
+        <item>栗松溫泉</item>
+    </string-array>
+    <string-array name="信義鄉">
+        <item>樂樂谷溫泉</item>
+    </string-array>
+    <string-array name="仁愛鄉">
+        <item>武界露營</item>
+        <item>五六露營農場</item>
+        <item>太魯灣溪溫泉</item>
+        <item>精英野溪溫泉</item>
+        <item>瑞岩溫泉</item>
+        <item>紅香溫泉</item>
+        <item>萬大南溪溫泉</item>
+    </string-array>
+    <string-array name="請選擇鄉鎮市區">
+        <item>請選擇鄉鎮市區</item>
+    </string-array>
+
+
 </resources>
